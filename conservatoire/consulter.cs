@@ -27,7 +27,6 @@ namespace conservatoire
 
         private void consulter_Load(object sender, EventArgs e)
         {
-            Form1 f1 = new Form1();
             pro = monManager.chargementProfBD();
             //pro = ProfDAO.getProf();
             affiche();
@@ -44,12 +43,37 @@ namespace conservatoire
                 MessageBox.Show(ex.Message);
             }
         }
+
+        //consulter les cours
         private void button1_Click(object sender, EventArgs e)
         {
             int unIdProf = ((Personne)listBox1.SelectedItem).Id;
             int unNumSeance = ((Personne)listBox1.SelectedItem).Id;
             form3 form3 = new form3(unIdProf);
             form3.ShowDialog();
+        }
+
+        //gerer les prof
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Prof unProf = (Prof)listBox1.SelectedItem;
+            form4 form4 = new form4(unProf);
+            form4.ShowDialog();
+        }
+
+        //rafraichir
+        private void button3_Click(object sender, EventArgs e)
+        {
+            pro = monManager.chargementProfBD();
+            affiche();
+        }
+
+        //gerer les cours
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Prof unProf = (Prof)listBox1.SelectedItem;
+            form5 form5 = new form5(unProf);
+            form5.ShowDialog();
         }
     }
 }

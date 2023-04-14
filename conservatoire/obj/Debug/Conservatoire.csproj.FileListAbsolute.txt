@@ -33,3 +33,5 @@ C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj
 C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj\Debug\conservatoire.form2.resources
 C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj\Debug\conservatoire.Form1.resources
 C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj\Debug\conservatoire.form3.resources
+C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj\Debug\conservatoire.form4.resources
+C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj\Debug\conservatoire.form5.resources

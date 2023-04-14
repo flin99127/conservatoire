@@ -17,6 +17,10 @@ namespace conservatoire.Modele
 
         public int Id { get => id; set => id = value; }
         public string Nom { get => nom; }
+        public string Prenom { get => prenom; }
+        public string Tel { get => tel; set => tel = value; }
+        public string Mail { get => mail; set => mail = value; }
+        public string Adresse { get => adresse; set => adresse = value; }
 
         public Personne(int unId, string unNom, string unPrenom, string unTel, string unMail, string uneAdresse)
         {

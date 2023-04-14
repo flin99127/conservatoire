@@ -58,13 +58,13 @@ namespace conservatoire.DAL
                 throw (m);
             }
         }
-        public static void insertProf(Prof p)
+        public static void insertProf(int unId, Prof p)
         {
             try
             {
                 maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
                 maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("insert into prof (id, nom, prenom, tel, mail, adresse, instrument, salaire) values( '" + e.Id + "' ,'" + e.Login + "')");
+                Ocom = maConnexionSql.reqExec("insert into prof (idprof, instrument, salaire) values('" + unId + "' ,'" + p.Instrument + "', '" + p.Salaire + "')");
                 int i = Ocom.ExecuteNonQuery();
                 maConnexionSql.closeConnection();
             }
@@ -73,5 +73,24 @@ namespace conservatoire.DAL
                 throw (m);
             }
         }
+        public static void suppProf(int unId)
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("delete from prof where idprof = " + unId);
+                int i = Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+            }
+            catch (Exception emp)
+            {
+                throw (emp);
+            }
+        }
+        /*public static void updateEmploye(Prof pr)
+        {
+           
+        }*/
     }
 }

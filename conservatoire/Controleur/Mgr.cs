@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using conservatoire.Modele;
 using conservatoire.DAL;
+using Mysqlx.Crud;
 
 namespace conservatoire.Controleur
 {
@@ -21,12 +22,22 @@ namespace conservatoire.Controleur
 
         SeanceDAO SeanceDAO = new SeanceDAO();
         List<Seance> maListeSeance;
+
+        InstrumentDAO InstrumentDAO = new InstrumentDAO();
+        List<string> maListeInstrument;
+
+        TrancheDAO TrancheDAO = new TrancheDAO();
+        List<string> maListeTranche;
+
+        JourDAO JourDAO = new JourDAO();
+        List<string> maListeJour;
+
+        NiveauDAO NiveauDAO = new NiveauDAO();
+        List<int> maListeNiveau;
+
         public Mgr()
         {
-            maListePersonne = new List<Personne>();
-            maListeProf = new List<Prof>();
-            maListeEleve = new List<Eleve>();
-            maListeSeance = new List<Seance>();
+
         }
 
         // Récupération de la liste des employés à partir de la DAL
@@ -62,9 +73,50 @@ namespace conservatoire.Controleur
         }
 
         //inserer, supprimer, modifier prof
-        public void insertProf(Prof p)
+        public void insertProf(Prof pr)
         {
-            ProfDAO.insertProf(p);
+            PersonneDAO.insertPersonne(pr);
+            ProfDAO.insertProf(PersonneDAO.getLastId(), pr);
+
+        }
+        public List<string> chargementInstruBD()
+        {
+            maListeInstrument = InstrumentDAO.getInstrument();
+            return (maListeInstrument);
+        }
+        public void suppProf(Prof pr)
+        {
+            ProfDAO.suppProf(pr.Id);
+            PersonneDAO.suppPersonne(pr.Id);
+        }
+
+        //gerer les cours
+        public void insertSeance(int id, string tranche, string jour, int niv, int capacite)
+        {
+            SeanceDAO.insertSeance(id, tranche, jour, niv, capacite);
+        }
+        public List<string> chargementTrancheBD()
+        {
+            maListeTranche = TrancheDAO.getTranche();
+            return(maListeTranche);
+        }
+        public List<string> chargementJourBD()
+        {
+            maListeJour = JourDAO.getJour();
+            return(maListeJour);
+        }
+        public List<int> chargementNivBD()
+        {
+            maListeNiveau = NiveauDAO.getNiveau();
+            return( maListeNiveau);
+        }
+        public void updateSeance(int numSeance, string tranche, string jour)
+        {
+            SeanceDAO.updateSeance(numSeance, tranche, jour);
+        }
+        public void suppSeance(int unNumSeance)
+        {
+            SeanceDAO.suppSeance(unNumSeance);
         }
     }
 }

@@ -18,6 +18,8 @@ namespace conservatoire.Modele
             this.instrument = unInstrument;
             this.salaire = unSalaire;
         }
+        public string Instrument { get => instrument; set => instrument = value; }
+        public double Salaire { get => salaire; set => salaire = value; }
         public override string Description
         {
             get => (base.Description + ",  " + this.instrument + ",  " + this.salaire);

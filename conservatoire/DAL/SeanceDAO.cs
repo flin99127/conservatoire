@@ -1,10 +1,12 @@
 ﻿using conservatoire.Modele;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Mysqlx.Expect.Open.Types;
 
 namespace conservatoire.DAL
 {
@@ -97,6 +99,51 @@ namespace conservatoire.DAL
             catch (Exception m)
             {
                 throw (m);
+            }
+        }
+        public static void insertSeance(int unId, string uneTranche, string unJour, int UnNiv, int UneCapacite)
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("insert into seance (idprof, tranche, jour, niveau, capacite) values('" + unId + "' ,'" + uneTranche + "', '" + unJour + "', '" + UnNiv + "', '" + UneCapacite + "')");
+                int i = Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+            }
+            catch (Exception m)
+            {
+                throw (m);
+            }
+        }
+        public static void updateSeance(int numSeance, string uneTranche, string unJour)
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("UPDATE seance SET tranche = '" + uneTranche + "', jour = '" + unJour + "' WHERE numseance = '" + numSeance + "'");
+                int i = Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+            }
+            catch (Exception m)
+            {
+                throw (m);
+            }
+        }
+        public static void suppSeance(int unNumSeance)
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("delete from seance where numseance = " + unNumSeance);
+                int i = Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+            }
+            catch (Exception emp)
+            {
+                throw (emp);
             }
         }
     }

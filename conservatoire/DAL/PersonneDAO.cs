@@ -57,5 +57,62 @@ namespace conservatoire.DAL
                 throw (m);
             }
         }
+        public static void insertPersonne(Personne p)
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("insert into personne (nom, prenom, tel, mail, adresse) values('" + p.Nom + "' ,'" + p.Prenom + "', '" + p.Tel + "', '" + p.Mail + "', '" + p.Adresse + "')");
+                int i = Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+            }
+            catch (Exception m)
+            {
+                throw (m);
+            }
+        }
+        public static int getLastId()
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                //Ocom = maConnexionSql.reqExec("select last_insert_ID(ID) from personne order by last_insert_ID(ID) desc limit 1");
+                Ocom = maConnexionSql.reqExec("select * from personne");
+                MySqlDataReader reader = Ocom.ExecuteReader();
+                int id = 0;
+
+                while(reader.Read())
+                {
+                    id = (int)reader.GetValue(0);
+                }
+                reader.Close();
+
+                maConnexionSql.closeConnection();
+
+                return id;
+            }
+            catch (Exception m)
+            {
+                throw (m);
+            }
+        }
+        public static void suppPersonne(int unId)
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("delete from personne where id = " + unId);
+                int i = Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+            }
+            catch (Exception m)
+            {
+                throw (m);
+            }
+            
+        }
     }
 }

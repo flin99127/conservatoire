@@ -15,6 +15,6 @@ namespace conservatoire.Modele
         {
             this.libelle = unLibelle;
         }
-        public string Libelle { get; set; }
+        public string Libelle { get => libelle; set => libelle = value; }
     }
 }

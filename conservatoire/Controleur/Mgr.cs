@@ -13,10 +13,10 @@ namespace conservatoire.Controleur
     {
         PersonneDAO PersonneDAO = new PersonneDAO();
         List<Personne> maListePersonne;
-        
+
         ProfDAO ProfDAO = new ProfDAO();
         List<Prof> maListeProf;
-        
+
         EleveDAO EleveDAO = new EleveDAO();
         List<Eleve> maListeEleve;
 
@@ -35,6 +35,12 @@ namespace conservatoire.Controleur
         NiveauDAO NiveauDAO = new NiveauDAO();
         List<int> maListeNiveau;
 
+        InscriptionDAO InscriptionDAO = new InscriptionDAO();
+        List<Inscription> maListeInscription;
+
+        TrimestreDAO TrimestreDAO = new TrimestreDAO();
+        List<Trimestre> maListeTrimestre;
+
         public Mgr()
         {
 
@@ -49,7 +55,7 @@ namespace conservatoire.Controleur
         public List<Prof> chargementProfBD()
         {
             maListeProf = ProfDAO.getProf();
-            return(maListeProf);
+            return (maListeProf);
         }
         public List<Eleve> chargementEleveBD()
         {
@@ -73,11 +79,21 @@ namespace conservatoire.Controleur
         }
 
         //inserer, supprimer, modifier prof
+        public void updateProf(int id, Prof pr)
+        {
+            PersonneDAO.updatePersonne(id, pr);
+            ProfDAO.updateProf(id, pr);
+        }
         public void insertProf(Prof pr)
         {
             PersonneDAO.insertPersonne(pr);
             ProfDAO.insertProf(PersonneDAO.getLastId(), pr);
 
+        }
+        public Prof GetProf(int id)
+        {
+            Prof p = ProfDAO.getProf(id);
+            return (p);
         }
         public List<string> chargementInstruBD()
         {
@@ -98,17 +114,17 @@ namespace conservatoire.Controleur
         public List<string> chargementTrancheBD()
         {
             maListeTranche = TrancheDAO.getTranche();
-            return(maListeTranche);
+            return (maListeTranche);
         }
         public List<string> chargementJourBD()
         {
             maListeJour = JourDAO.getJour();
-            return(maListeJour);
+            return (maListeJour);
         }
         public List<int> chargementNivBD()
         {
             maListeNiveau = NiveauDAO.getNiveau();
-            return( maListeNiveau);
+            return (maListeNiveau);
         }
         public void updateSeance(int numSeance, string tranche, string jour)
         {
@@ -117,6 +133,18 @@ namespace conservatoire.Controleur
         public void suppSeance(int unNumSeance)
         {
             SeanceDAO.suppSeance(unNumSeance);
+        }
+
+        //mission 3
+        public List<Inscription> getInscrit()
+        {
+            maListeInscription = InscriptionDAO.getInscrit();
+            return (maListeInscription);
+        }
+        public List<Trimestre> getTrim()
+        {
+            maListeTrimestre = TrimestreDAO.getTrim();
+            return (maListeTrimestre);
         }
     }
 }

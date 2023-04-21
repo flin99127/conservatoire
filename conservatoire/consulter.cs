@@ -75,5 +75,12 @@ namespace conservatoire
             form5 form5 = new form5(unProf);
             form5.ShowDialog();
         }
+
+        //liste des inscrits
+        private void button5_Click(object sender, EventArgs e)
+        {
+            form6 form6 = new form6();
+            form6.ShowDialog();
+        }
     }
 }

@@ -90,6 +90,7 @@
     <Compile Include="Controleur\Mgr.cs" />
     <Compile Include="DAL\Connexion.cs" />
     <Compile Include="DAL\EleveDAO.cs" />
+    <Compile Include="DAL\InscriptionDAO.cs" />
     <Compile Include="DAL\InstrumentDAO.cs" />
     <Compile Include="DAL\JourDAO.cs" />
     <Compile Include="DAL\NiveauDAO.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="DAL\ProfDAO.cs" />
     <Compile Include="DAL\SeanceDAO.cs" />
     <Compile Include="DAL\TrancheDAO.cs" />
+    <Compile Include="DAL\TrimestreDAO.cs" />
     <Compile Include="form4.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +110,12 @@
     </Compile>
     <Compile Include="form5.Designer.cs">
       <DependentUpon>form5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="form6.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form6.Designer.cs">
+      <DependentUpon>form6.cs</DependentUpon>
     </Compile>
     <Compile Include="listeSeance.cs">
       <SubType>Form</SubType>
@@ -121,6 +129,7 @@
     <Compile Include="Modele\Instrument.cs" />
     <Compile Include="Modele\Prof.cs" />
     <Compile Include="Modele\Seance.cs" />
+    <Compile Include="Modele\Trimestre.cs" />
     <Compile Include="Vue\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="form5.resx">
       <DependentUpon>form5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form6.resx">
+      <DependentUpon>form6.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="listeSeance.resx">
       <DependentUpon>listeSeance.cs</DependentUpon>

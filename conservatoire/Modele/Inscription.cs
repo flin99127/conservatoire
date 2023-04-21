@@ -12,12 +12,30 @@ namespace conservatoire.Modele
         private int idEleve;
         private int numSeance;
         private DateTime dateInscri;
-        public Inscription(int idProf, int idEleve, int numSeance, DateTime dateInscri)
+        private string nomProf;
+        private string prenomProf;
+        private string nomEleve;
+        private string prenomEleve;
+        private string tranche;
+        private string jour;
+        public Inscription(int idProf, string nomProf, string prenomProf, int idEleve, string nomEleve, string prenomEleve, int numSeance, string tranche, string jour, DateTime dateInscri)
         {
             this.idProf = idProf;
+            this.nomProf = nomProf;
+            this.prenomProf = prenomProf;
             this.idEleve = idEleve;
+            this.nomEleve = nomEleve;
+            this.prenomEleve = prenomEleve;
             this.numSeance = numSeance;
+            this.tranche = tranche;
+            this.jour = jour;
             this.dateInscri = dateInscri;
         }
+        public virtual string Description
+        {
+            get => ("Prof : " + this.nomProf + " " + this.prenomProf + ", Eleve : " + this.nomEleve + " " + this .prenomEleve + ",  " + this.tranche + ",  " + this.jour + ",  " + this.dateInscri);
+        }
+        public int IdEleve { get => idEleve; set => idEleve = value; }
+        public int NumSeance { get => numSeance; set => numSeance = value; }
     }
 }

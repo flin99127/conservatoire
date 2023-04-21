@@ -112,7 +112,21 @@ namespace conservatoire.DAL
             {
                 throw (m);
             }
-            
+        }
+        public static void updatePersonne(int id, Personne p)
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("update personne set nom = '" + p.Nom + "', prenom = '" + p.Prenom + "', tel = '" + p.Tel + "', mail = '" + p.Mail + "', adresse ='" + p.Adresse + "' where id = " + id);
+                int i = Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+            }
+            catch (Exception m)
+            {
+                throw (m);
+            }
         }
     }
 }

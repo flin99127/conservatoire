@@ -88,9 +88,56 @@ namespace conservatoire.DAL
                 throw (emp);
             }
         }
-        /*public static void updateEmploye(Prof pr)
+        public static void updateProf(int id, Prof pr)
         {
-           
-        }*/
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("update prof set instrument = '" + pr.Instrument + "', salaire = " + pr.Salaire + " where idProf = " + id);
+                int i = Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+            }
+            catch (Exception m)
+            {
+                throw (m);
+            }
+        }
+        public static Prof getProf(int id)
+        {
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("Select id, nom, prenom, tel, mail, adresse, instrument, salaire from personne join prof on personne.ID = prof.IDPROF where id = " + id );
+                MySqlDataReader reader = Ocom.ExecuteReader();
+                Prof pr = new Prof(999, "", "", "", "", "", "", 999);
+
+                while (reader.Read())
+                {
+                    int numero = (int)reader.GetValue(0);
+                    string nom = (string)reader.GetValue(1);
+                    string prenom = (string)reader.GetValue(2);
+                    string tel = (string)reader.GetValue(3);
+                    string mail = (string)reader.GetValue(4);
+                    string adresse = (string)reader.GetValue(5);
+                    string instrument = (string)reader.GetValue(6);
+                    double salaire = (double)reader.GetValue(7);
+
+                    //Instanciation d'un Emplye
+                    pr = new Prof(numero, nom, prenom, tel, mail, adresse, instrument, salaire);
+                }
+                reader.Close();
+
+                maConnexionSql.closeConnection();
+
+                // Envoi de la liste au Manager
+                return (pr);
+            }
+            catch (Exception m)
+            {
+                throw (m);
+            }
+        }
     }
 }

@@ -21,5 +21,8 @@ namespace conservatoire.Modele
         {
             get => (" " + this.libelle + ",  " + this.datePaie + ",  " + this.paye);
         }
+        public string Paye { get => paye; set => paye = value; }
+        public DateTime DatePaie { get => datePaie; set => datePaie = value; }
+        public string Libelle { get => libelle; set => libelle = value; }
     }
 }

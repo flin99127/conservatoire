@@ -84,6 +84,8 @@ namespace conservatoire.Controleur
             PersonneDAO.updatePersonne(id, pr);
             ProfDAO.updateProf(id, pr);
         }
+
+        //inserer
         public void insertProf(Prof pr)
         {
             PersonneDAO.insertPersonne(pr);
@@ -100,6 +102,8 @@ namespace conservatoire.Controleur
             maListeInstrument = InstrumentDAO.getInstrument();
             return (maListeInstrument);
         }
+
+        //supp
         public void suppProf(Prof pr)
         {
             ProfDAO.suppProf(pr.Id);
@@ -141,10 +145,14 @@ namespace conservatoire.Controleur
             maListeInscription = InscriptionDAO.getInscrit();
             return (maListeInscription);
         }
-        public List<Trimestre> getTrim()
+        public List<Trimestre> getTrim(int ideleve, int numseance)
         {
-            maListeTrimestre = TrimestreDAO.getTrim();
+            maListeTrimestre = TrimestreDAO.getTrim(ideleve, numseance);
             return (maListeTrimestre);
+        }
+        public void updatePayer(string date, int ideleve, int numseance, string libe)
+        {
+            PayerDAO.updatePayer(date, 1, ideleve, numseance, libe);
         }
     }
 }

@@ -95,15 +95,8 @@ namespace conservatoire
             string libelle = ((Trimestre)listBox2.SelectedItem).Libelle;
 
             monManager.updatePayer(date, idEleve, numSeance, libelle);
-        }
 
-        //rafraichir
-        private void button2_Click(object sender, EventArgs e)
-        {
-            /*inscrit = monManager
-            trim = monManager.getTrim(int ideleve, int numseance);
-
-            afficheT();*/
+            MessageBox.Show("paiement confirmé");
         }
     }
 }

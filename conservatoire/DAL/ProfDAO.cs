@@ -17,6 +17,7 @@ namespace conservatoire.DAL
         private static string mdp = "";
         private static ConnexionSql maConnexionSql;
         private static MySqlCommand Ocom;
+        private static string connectionString = "server=localhost;userid=root;password=;database=musique";
         public static List<Prof> getProf()
         {
             List<Prof> pro = new List<Prof>();
@@ -40,10 +41,10 @@ namespace conservatoire.DAL
                     string instrument = (string)reader.GetValue(6);
                     double salaire = (double)reader.GetValue(7);
 
-                    //Instanciation d'un Emplye
+                    //Instanciation d'un prof
                     pr = new Prof(numero, nom, prenom, tel, mail, adresse, instrument, salaire);
 
-                    // Ajout de cet employe à la liste 
+                    // Ajout de ce prof à la liste 
                     pro.Add(pr);
                 }
                 reader.Close();
@@ -62,11 +63,15 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("insert into prof (idprof, instrument, salaire) values('" + unId + "' ,'" + p.Instrument + "', '" + p.Salaire + "')");
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@unId", unId);
+                command.Parameters.AddWithValue("@instrument", p.Instrument);
+                command.Parameters.AddWithValue("@salaire ", p.Salaire);
+                command.CommandText = ("insert into prof (idprof, instrument, salaire) values( @unId, @instrument, @salaire)");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception m)
             {
@@ -77,11 +82,13 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("delete from prof where idprof = " + unId);
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@unId", unId);
+                command.CommandText = ("delete from prof where idprof = @unId");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception emp)
             {
@@ -92,11 +99,15 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("update prof set instrument = '" + pr.Instrument + "', salaire = " + pr.Salaire + " where idProf = " + id);
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@instrument", pr.Instrument);
+                command.Parameters.AddWithValue("@salaire", pr.Salaire);
+                command.CommandText = ("update prof set instrument = @instrument, salaire = @salaire where idProf = @id");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception m)
             {
@@ -107,10 +118,12 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("Select id, nom, prenom, tel, mail, adresse, instrument, salaire from personne join prof on personne.ID = prof.IDPROF where id = " + id );
-                MySqlDataReader reader = Ocom.ExecuteReader();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@id", id);
+                command.CommandText = ("Select id, nom, prenom, tel, mail, adresse, instrument, salaire from personne join prof on personne.ID = prof.IDPROF where id = @id ");
+                MySqlDataReader reader = command.ExecuteReader();
                 Prof pr = new Prof(999, "", "", "", "", "", "", 999);
 
                 while (reader.Read())
@@ -124,12 +137,12 @@ namespace conservatoire.DAL
                     string instrument = (string)reader.GetValue(6);
                     double salaire = (double)reader.GetValue(7);
 
-                    //Instanciation d'un Emplye
+                    //Instanciation d'une personne
                     pr = new Prof(numero, nom, prenom, tel, mail, adresse, instrument, salaire);
                 }
                 reader.Close();
 
-                maConnexionSql.closeConnection();
+                connection.Close();
 
                 // Envoi de la liste au Manager
                 return (pr);

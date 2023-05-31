@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 21 avr. 2023 à 18:49
+-- Généré le : lun. 29 mai 2023 à 13:46
 -- Version du serveur : 10.4.24-MariaDB
 -- Version de PHP : 8.1.6
 
@@ -66,7 +66,8 @@ INSERT INTO `eleve` (`IDELEVE`, `NIVEAU`, `BOURSE`) VALUES
 (11, 2, 0),
 (12, 2, 1),
 (13, 3, 0),
-(14, 3, 1);
+(14, 3, 1),
+(50, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -111,6 +112,7 @@ INSERT INTO `inscription` (`IDPROF`, `IDELEVE`, `NUMSEANCE`, `DATEINSCRIPTION`) 
 (1, 10, 2, '2023-02-21'),
 (1, 11, 2, '2023-02-21'),
 (1, 12, 2, '2023-02-21'),
+(1, 50, 1, '2023-05-23'),
 (2, 5, 3, '2023-02-21'),
 (2, 6, 3, '2023-02-21'),
 (2, 7, 3, '2023-02-21'),
@@ -213,7 +215,7 @@ CREATE TABLE `payer` (
 --
 
 INSERT INTO `payer` (`IDPROF`, `IDELEVE`, `NUMSEANCE`, `LIBELLE`, `DATEPAIEMENT`, `PAYE`) VALUES
-(1, 5, 1, 'avril-juin', '0000-00-00', 0),
+(1, 5, 1, 'avril-juin', '2023-05-05', 1),
 (1, 5, 1, 'janvier-avril', '2023-02-21', 1),
 (1, 5, 1, 'septembre-décembre', '2022-11-21', 1);
 
@@ -253,7 +255,17 @@ INSERT INTO `personne` (`ID`, `NOM`, `PRENOM`, `TEL`, `MAIL`, `ADRESSE`) VALUES
 (14, 'Boucher', 'Alexandre', '0567890123', 'alexandre.boucher@example.com', '168 avenue de Clichy'),
 (36, 'yo', 'yo', '03232', '@', 'RUE'),
 (37, 'yo', 'yo', '041', '@', 'RUE'),
-(38, 'yo', 'yo', '077', '@', 'rue');
+(38, 'yo', 'yoyo', '077', '@', 'rue'),
+(41, 'yo', 'yoo', '58394', '@', 'rue'),
+(42, '', '', '', '', ''),
+(43, 'yo', 'yoo', '55555', '@', 'rue'),
+(44, 'yo', 'yoo', '55555', '@', 'rue'),
+(45, 'yo', 'yoo', '55555', '@', 'rue'),
+(46, 'yo', 'yoo', '55555', '@', 'rue'),
+(47, 'yo', 'yoo', '55555', '@', 'rue'),
+(48, 'yo', 'yo', '55555', '@', 'rue'),
+(49, 'yo', 'yoo', '58394', '@', 'rue'),
+(50, 'yo', 'yo', '56', '@', 'rue');
 
 -- --------------------------------------------------------
 
@@ -474,7 +486,7 @@ ALTER TABLE `trim`
 -- AUTO_INCREMENT pour la table `personne`
 --
 ALTER TABLE `personne`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT pour la table `seance`

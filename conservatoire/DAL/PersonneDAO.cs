@@ -17,6 +17,7 @@ namespace conservatoire.DAL
         private static string mdp = "";
         private static ConnexionSql maConnexionSql;
         private static MySqlCommand Ocom;
+        private static string connectionString = "server=localhost;userid=root;password=;database=musique";
 
         public static List<Personne> getPersonne()
         {
@@ -39,10 +40,10 @@ namespace conservatoire.DAL
                     string mail = (string)reader.GetValue(4);
                     string adresse = (string)reader.GetValue(5);
 
-                    //Instanciation d'un Emplye
+                    //Instanciation d'une personne
                     p = new Personne(numero, nom, prenom, tel, mail, adresse);
 
-                    // Ajout de cet employe à la liste 
+                    // Ajout de cette personne à la liste 
                     pn.Add(p);
                 }
                 reader.Close();
@@ -61,11 +62,17 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("insert into personne (nom, prenom, tel, mail, adresse) values('" + p.Nom + "' ,'" + p.Prenom + "', '" + p.Tel + "', '" + p.Mail + "', '" + p.Adresse + "')");
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@nom", p.Nom);
+                command.Parameters.AddWithValue("@prenom", p.Prenom);
+                command.Parameters.AddWithValue("@tel", p.Tel);
+                command.Parameters.AddWithValue("@mail", p.Mail);
+                command.Parameters.AddWithValue("@adresse", p.Adresse);
+                command.CommandText = ("insert into personne (nom, prenom, tel, mail, adresse) values(@nom, @prenom, @tel, @mail, @adresse)");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception m)
             {
@@ -102,10 +109,12 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("delete from personne where id = " + unId);
-                int i = Ocom.ExecuteNonQuery();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@id", unId);
+                command.CommandText = ("delete from personne where id = @unId");
+                int i = command.ExecuteNonQuery();
                 maConnexionSql.closeConnection();
             }
             catch (Exception m)
@@ -117,11 +126,18 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("update personne set nom = '" + p.Nom + "', prenom = '" + p.Prenom + "', tel = '" + p.Tel + "', mail = '" + p.Mail + "', adresse ='" + p.Adresse + "' where id = " + id);
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@nom", p.Nom);
+                command.Parameters.AddWithValue("@prenom", p.Prenom);
+                command.Parameters.AddWithValue("@tel", p.Tel);
+                command.Parameters.AddWithValue("@mail", p.Mail);
+                command.Parameters.AddWithValue("@adresse", p.Adresse);
+                command.CommandText = ("update personne set nom = @nom, prenom = @prenom, tel = @tel, mail = @mail, adresse = @adresse where id = @id");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception m)
             {

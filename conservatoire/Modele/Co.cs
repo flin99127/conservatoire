@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace conservatoire.Modele
 {
-    internal class Co
+    public class Co
     {
-        private int id;
+        private string id;
         private string login;
         private string mdp;
         public Co(string login, string mdp)
@@ -16,6 +16,9 @@ namespace conservatoire.Modele
             this.login = login;
             this.mdp = mdp;
         }
-        public int Id { get; set; }
+
+        public string Login { get => login; set => login = value; }
+        public string Mdp { get => mdp; set => mdp = value; }
+        public string Id { get => id; set => id = value; }
     }
 }

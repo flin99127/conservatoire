@@ -17,6 +17,7 @@ namespace conservatoire.DAL
         private static string mdp = "";
         private static ConnexionSql maConnexionSql;
         private static MySqlCommand Ocom;
+        private static string connectionString = "server=localhost;userid=root;password=;database=musique";
         public static List<Eleve> getEleve()
         {
             List<Eleve> ele = new List<Eleve>();
@@ -40,10 +41,10 @@ namespace conservatoire.DAL
                     int niv = (int)reader.GetValue(6);
                     int bourse = (int)reader.GetValue(7);
 
-                    //Instanciation d'un Emplye
+                    //Instanciation d'un Eleve
                     e = new Eleve(numero, nom, prenom, tel, mail, adresse, niv, bourse);
 
-                    // Ajout de cet employe à la liste 
+                    // Ajout de cet eleve à la liste 
                     ele.Add(e);
                 }
                 reader.Close();
@@ -64,10 +65,12 @@ namespace conservatoire.DAL
 
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("Select id, nom, prenom, tel, mail, adresse, niveau, bourse from personne join eleve on personne.id = eleve.ideleve where id in (select  ideleve from inscription where numseance = " + unNumSeance + ")");
-                MySqlDataReader reader = Ocom.ExecuteReader();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@numseance", unNumSeance);
+                command.CommandText = ("Select id, nom, prenom, tel, mail, adresse, niveau, bourse from personne join eleve on personne.id = eleve.ideleve where id in (select  ideleve from inscription where numseance = @numseance)");
+                MySqlDataReader reader = command.ExecuteReader();
                 Eleve e;
 
                 while (reader.Read())
@@ -81,16 +84,13 @@ namespace conservatoire.DAL
                     int niv = (int)reader.GetValue(6);
                     int bourse = (int)reader.GetValue(7);
 
-                    //Instanciation d'un Emplye
                     e = new Eleve(numero, nom, prenom, tel, mail, adresse, niv, bourse);
 
-                    // Ajout de cet employe à la liste 
                     ele.Add(e);
                 }
                 reader.Close();
 
-                maConnexionSql.closeConnection();
-
+                connection.Close();
                 // Envoi de la liste au Manager
                 return (ele);
             }

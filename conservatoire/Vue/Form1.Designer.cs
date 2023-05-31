@@ -54,6 +54,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(524, 308);
             this.textBox2.Name = "textBox2";
+            this.textBox2.PasswordChar = '*';
             this.textBox2.Size = new System.Drawing.Size(246, 31);
             this.textBox2.TabIndex = 3;
             // 
@@ -66,7 +67,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Connexion";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -18,6 +18,7 @@ namespace conservatoire.DAL
         private static string mdp = "";
         private static ConnexionSql maConnexionSql;
         private static MySqlCommand Ocom;
+        private static string connectionString = "server=localhost;userid=root;password=;database=musique";
 
         public static List<Trimestre> getTrim(int ideleve, int numseance)
         {
@@ -25,10 +26,13 @@ namespace conservatoire.DAL
 
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("select libelle, datePaiement, paye from payer where idEleve= " + ideleve + " and numseance = " + numseance);
-                MySqlDataReader reader = Ocom.ExecuteReader();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@ideleve", ideleve);
+                command.Parameters.AddWithValue("@numseance", numseance);
+                command.CommandText = ("select libelle, datePaiement, paye from payer where idEleve= @ideleve and numseance = @numseance");
+                MySqlDataReader reader = command.ExecuteReader();
                 Trimestre t;
 
                 while (reader.Read())
@@ -45,15 +49,15 @@ namespace conservatoire.DAL
                         paye = "oui";
                     }
 
-                    //Instanciation d'un Emplye
+                    //Instanciation d'un trimestre
                     t = new Trimestre(libelle, datePaie, paye);
 
-                    // Ajout de cet employe à la liste 
+                    // Ajout de ce trimestre à la liste 
                     trimestre.Add(t);
                 }
                 reader.Close();
 
-                maConnexionSql.closeConnection();
+                connection.Close();
 
                 // Envoi de la liste au Manager
                 return (trimestre);
@@ -67,11 +71,15 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("update payer set datepaiement = '2023/05/04', paye = 1 where idEleve = " + ideleve + " and numseance = " + numseance + " and libelle = " + libe);
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@ideleve", ideleve);
+                command.Parameters.AddWithValue("@numseance", numseance);
+                command.Parameters.AddWithValue("@libelle", libe);
+                command.CommandText = ("update payer set datepaiement = '2023/05/04', paye = 1 where idEleve = @ideleve and numseance = @numseance and libelle = libe");
                 int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                connection.Close();
             }
             catch (Exception m)
             {

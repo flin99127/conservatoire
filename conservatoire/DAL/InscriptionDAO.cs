@@ -47,10 +47,10 @@ namespace conservatoire.DAL
 
                     DateTime dateInscription = (DateTime)reader.GetValue(9);
 
-                    //Instanciation d'un Emplye
+                    //Instanciation d'un inscrit
                     i = new Inscription(idProf, nomProf, prenomProf, idEleve, nomEleve, prenomEleve, numSeance, tranche, jour, dateInscription);
 
-                    // Ajout de cet employe à la liste 
+                    // Ajout de cet inscrit à la liste 
                     inscrit.Add(i);
                 }
                 reader.Close();

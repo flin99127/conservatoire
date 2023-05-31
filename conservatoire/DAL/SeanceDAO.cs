@@ -19,6 +19,7 @@ namespace conservatoire.DAL
         private static string mdp = "";
         private static ConnexionSql maConnexionSql;
         private static MySqlCommand Ocom;
+        private static string connectionString = "server=localhost;userid=root;password=;database=musique";
         public static List<Seance> getSeance()
         {
             List<Seance> seances = new List<Seance>();
@@ -40,10 +41,10 @@ namespace conservatoire.DAL
                     int niv = (int)reader.GetValue(4);
                     int capacite = (int)reader.GetValue(5);
 
-                    //Instanciation d'un Emplye
+                    //Instanciation d'une seance
                     s = new Seance(idProf, numSeance, tranche, jour, niv, capacite);
 
-                    // Ajout de cet employe à la liste 
+                    // Ajout de cette seance à la liste 
                     seances.Add(s);
                 }
                 reader.Close();
@@ -64,13 +65,15 @@ namespace conservatoire.DAL
 
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("Select * from seance where idprof = " + unIdProf);
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@unIdprof", unIdProf);
+                command.CommandText = ("Select * from seance where idprof = @unIdProf");
+                MySqlDataReader reader = command.ExecuteReader();
                 /*Ocom.CommandText = ("SELECT * FROM seance WHERE idprof= @idProf");
                 Ocom.Prepare();
                 Ocom.Parameters.AddWithValue("@idProf", unIdProf);*/
-                MySqlDataReader reader = Ocom.ExecuteReader();
                 Seance s;
 
                 while (reader.Read())
@@ -83,15 +86,15 @@ namespace conservatoire.DAL
                     int capacite = (int)reader.GetValue(5);
 
 
-                    //Instanciation d'un Emplye
+                    //Instanciation d'une seance
                     s = new Seance(idProf, numSeance, tranche, jour, niv, capacite);
 
-                    // Ajout de cet employe à la liste 
+                    // Ajout de cette seance à la liste 
                     seances.Add(s);
                 }
                 reader.Close();
 
-                maConnexionSql.closeConnection();
+                connection.Close();
 
                 // Envoi de la liste au Manager
                 return (seances);
@@ -105,11 +108,18 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("insert into seance (idprof, tranche, jour, niveau, capacite) values('" + unId + "' ,'" + uneTranche + "', '" + unJour + "', '" + UnNiv + "', '" + UneCapacite + "')");
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@id", unId);
+                command.Parameters.AddWithValue("@uneTranche ", uneTranche);
+                command.Parameters.AddWithValue("@unJour ", unJour);
+                command.Parameters.AddWithValue("@UnNiv ", UnNiv);
+                command.Parameters.AddWithValue("@UneCapacite ", UneCapacite);
+                command.CommandText = ("insert into seance (idprof, tranche, jour, niveau, capacite) values(' @unId, @uneTranche, @unJour, @UnNiv, @UneCapacite)");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception m)
             {
@@ -120,11 +130,15 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("UPDATE seance SET tranche = '" + uneTranche + "', jour = '" + unJour + "' WHERE numseance = '" + numSeance + "'");
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@numSeance", numSeance);
+                command.Parameters.AddWithValue("@uneTranche ", uneTranche);
+                command.Parameters.AddWithValue("@unJour ", unJour);
+                command.CommandText = ("UPDATE seance SET tranche = @uneTranche, jour = @unJour WHERE numseance = @numSeance '");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception m)
             {
@@ -135,11 +149,13 @@ namespace conservatoire.DAL
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("delete from seance where numseance = " + unNumSeance);
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@unNumSeance", unNumSeance);
+                command.CommandText = ("delete from seance where numseance = @unNumSeance");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception emp)
             {

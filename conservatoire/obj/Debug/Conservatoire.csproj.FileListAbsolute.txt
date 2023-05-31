@@ -36,3 +36,6 @@ C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj
 C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj\Debug\conservatoire.form4.resources
 C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj\Debug\conservatoire.form5.resources
 C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\obj\Debug\conservatoire.form6.resources
+C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\bin\Debug\Newtonsoft.Json.dll
+C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\bin\Debug\Newtonsoft.Json.xml
+C:\Users\franc\OneDrive\Documents\exo voiture C#\conservatoire\conservatoire\bin\Debug\MD5.dll

@@ -31,7 +31,7 @@ namespace conservatoire.DAL
                 {
                     string i = (string)reader.GetValue(0);
 
-                    // Ajout de cet employe à la liste 
+                    // Ajout de cet tranche à la liste 
                     Tranche.Add(i);
                 }
                 reader.Close();

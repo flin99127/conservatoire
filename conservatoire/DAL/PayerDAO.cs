@@ -17,16 +17,23 @@ namespace conservatoire.DAL
         private static string mdp = "";
         private static ConnexionSql maConnexionSql;
         private static MySqlCommand Ocom;
+        private static string connectionString = "server=localhost;userid=root;password=;database=musique";
 
         public static void updatePayer(string date, int payer, int ideleve, int numseance, string libe)
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-                maConnexionSql.openConnection();
-                Ocom = maConnexionSql.reqExec("update payer set datepaiement = '" + date + "', paye = " + payer + " where idEleve = " + ideleve + " and numseance = " + numseance + " and libelle = '" + libe + "' ");
-                int i = Ocom.ExecuteNonQuery();
-                maConnexionSql.closeConnection();
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@date", date);
+                command.Parameters.AddWithValue("@payer", payer);
+                command.Parameters.AddWithValue("@idEleve", ideleve);
+                command.Parameters.AddWithValue("@numsenace", numseance);
+                command.Parameters.AddWithValue("@libelle", libe);
+                command.CommandText = ("update payer set datepaiement = @date, paye = @payer where idEleve = @idEleve and numseance = @numseance and libelle = @libe ");
+                int i = command.ExecuteNonQuery();
+                connection.Close();
             }
             catch (Exception m)
             {
